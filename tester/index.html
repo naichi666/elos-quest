@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Quest of the Heart: Untuk Putri Elica 💖</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Animated Aurora Mesh Gradient Overlay -->
+  <div class="aurora-bg"></div>
+
+  <!-- 3D WebGL Scene Canvas -->
+  <canvas id="webgl-canvas"></canvas>
+
+  <!-- Floating +1 Score Popups Container -->
+  <div id="floating-popups" class="floating-popups"></div>
+
+  <!-- Top Navigation Bar -->
+  <header class="top-nav">
+    <div class="brand-badge">
+      <span class="brand-icon">👑</span>
+      <span class="brand-text">Elica's Royal Quest</span>
+    </div>
+    <div class="nav-controls">
+      <button id="btn-audio-toggle" class="icon-btn" type="button">
+        <span>🎵</span>
+        <span>Musik: On</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mini-Game HUD (Top Center) -->
+  <section id="game-hud" class="game-hud hidden" aria-live="polite">
+    <div class="hud-header">
+      <div class="quest-title">
+        <span>⚔️</span>
+        <span>Misi: Kumpulkan Kristal Hati untuk Elica</span>
+      </div>
+      <div id="heart-count-text" class="heart-counter">0 / 10 ❤️</div>
+    </div>
+    <div class="progress-track">
+      <div id="progress-fill" class="progress-fill"></div>
+    </div>
+    <div class="hud-footer">
+      <span id="princess-cheer-text" class="princess-cheer">
+        Putri Elica: "Semangat Ksatriaku! Kumpulkan kristal cintanya~" ✨
+      </span>
+      <button id="btn-auto-collect" class="icon-btn" style="padding: 4px 12px; font-size: 0.74rem;" type="button">
+        ✨ Auto-Kumpul
+      </button>
+    </div>
+  </section>
+
+  <!-- Screen 1: Intro / RPG Title Overlay -->
+  <main id="intro-screen" class="overlay-screen">
+    <div class="glass-card">
+      <h1 class="hero-title">Kisah Ksatria &amp; Putri Elica</h1>
+      <p class="hero-subtitle">
+        Di bawah langit berbintang kerajaan fantasi ini, seorang Ksatria sedang mengumpulkan
+        <strong>10 Kristal Hati</strong> untuk membuka gulungan surat rahasia yang telah lama
+        disimpan khusus untuk <span class="highlight-name">Elica</span>.
+      </p>
+
+      <div class="character-showcase-row">
+        <div class="char-chip">
+          <span class="char-chip-icon">🛡️</span>
+          <div class="char-chip-info">
+            <span class="char-chip-role">Hero Playable 3D</span>
+            <span class="char-chip-name">Ksatria Penjaga Hati</span>
+          </div>
+        </div>
+        <div class="char-chip">
+          <span class="char-chip-icon">👑</span>
+          <div class="char-chip-info">
+            <span class="char-chip-role">Sang Bintang Utama</span>
+            <span class="char-chip-name">Putri Elica</span>
+          </div>
+        </div>
+      </div>
+
+      <button id="btn-start-game" class="primary-btn" type="button">
+        <span>⚔️ Mulai Petualangan Cinta</span>
+      </button>
+    </div>
+  </main>
+
+  <!-- Bottom Controls Bar during Mini-Game -->
+  <div id="controls-bar" class="controls-bar hidden">
+    <div class="dpad-container">
+      <button id="ctrl-left" class="ctrl-btn" type="button" aria-label="Gerak Kiri">◀</button>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <button id="ctrl-up" class="ctrl-btn" type="button" aria-label="Gerak Maju">▲</button>
+        <button id="ctrl-down" class="ctrl-btn" type="button" aria-label="Gerak Mundur">▼</button>
+      </div>
+      <button id="ctrl-right" class="ctrl-btn" type="button" aria-label="Gerak Kanan">▶</button>
+    </div>
+    <div class="controls-hint-pill">
+      <span>⌨️ Gunakan <strong>W A S D / Panah</strong></span>
+      <span>•</span>
+      <span>👆 Atau <strong>Klik / Sentuh Lantai Arena</strong></span>
+    </div>
+  </div>
+
+  <!-- Screen 2: Love Letter & Confession Finale Modal -->
+  <section id="confession-screen" class="overlay-screen hidden">
+    <div class="glass-card confession-card">
+      <div class="chapter-pill">
+        <span>💌</span>
+        <span>Quest Complete • Gulungan Surat Terbuka</span>
+      </div>
+      <h2 class="hero-title" style="font-size: clamp(1.6rem, 3.8vw, 2.35rem);">
+        Untukmu, Putri Elica ✨
+      </h2>
+
+      <div class="love-letter-box">
+        <p class="letter-greeting">Hai Elica yang paling manis,</p>
+        <p class="letter-body">
+          Sama seperti Ksatria di dunia 3D ini yang berlari mengumpulkan setiap kepingan kristal hati
+          demi bisa berdiri di hadapanmu, setiap hariku terasa jauh lebih berwarna sejak ada kamu.
+        </p>
+        <p class="letter-body">
+          Senyummu, caramu berbicara, dan kehadiranmu selalu punya sihir tersendiri yang bikin
+          hatiku tenang sekaligus berdebar. Aku nggak butuh dunia fantasi yang sempurna, karena
+          bagiku hal paling indah adalah bisa menghabiskan waktu dan berbagi cerita bersamamu.
+        </p>
+        <p class="letter-body" style="margin-bottom: 0;">
+          Hari ini, lewat dunia kecil yang kubuat khusus untukmu ini, aku ingin jujur tentang
+          perasaanku yang sesungguhnya...
+        </p>
+      </div>
+
+      <p class="letter-question">
+        Elica, maukah kamu menjadi pasangan di setiap petualangan hidupku? 💖
+      </p>
+      <div id="dodge-status-msg" class="dodge-status-msg">
+        Pilih jawaban dari hatimu untuk sang Ksatria~
+      </div>
+
+      <div class="confession-actions">
+        <button id="btn-yes" class="btn-yes" type="button">
+          💖 Yes, Aku Mau!
+        </button>
+        <button id="btn-no" class="btn-no" type="button">
+          Enggak 🙈
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Screen 3: Celebration Victory Banner (After Elica clicks "Yes, Aku Mau!") -->
+  <section id="victory-banner" class="victory-banner hidden">
+    <div class="chapter-pill" style="margin-bottom: 10px;">
+      <span>🎆</span>
+      <span>New Chapter Unlocked: Aku &amp; Elica</span>
+    </div>
+    <h3 class="victory-title">Terima Kasih, Putri Elica! 💖👑</h3>
+    <p class="victory-desc">
+      Langit kerajaan memancarkan kembang api terindah malam ini! Mulai sekarang, sang Ksatria
+      berjanji akan selalu menjaga senyum dan kebahagiaan <strong>Elica</strong> setiap hari. ✨
+    </p>
+    <div class="victory-actions">
+      <button id="btn-more-fireworks" class="primary-btn" style="padding: 11px 24px; font-size: 0.9rem;" type="button">
+        🎆 Luncurkan Kembang Api Lagi
+      </button>
+      <button id="btn-reopen-letter" class="icon-btn" type="button">
+        💌 Baca Surat Lagi
+      </button>
+      <button id="btn-replay-game" class="icon-btn" type="button">
+        🎮 Main Lagi
+      </button>
+    </div>
+  </section>
+
+  <!-- Three.js Library & Application Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="sound.js"></script>
+  <script src="characters.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
